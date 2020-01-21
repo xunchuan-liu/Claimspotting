@@ -2,6 +2,7 @@ import pygsheets
 import datetime
 import pandas as pd
 import requests
+import time
 
 df = pd.DataFrame()
 d = datetime.datetime.today().strftime("%B %d, %Y") #Example: January 20, 2020
@@ -23,6 +24,7 @@ for x in f:
     obj = response.json()
     final = obj['results'][0]['score'] #Retrieves the score
     scores.append(final) #Adds to score array
+    time.sleep(2) #Make sure we're not treating the API too harshly
 
 df['Claims'] = claims #Sets in dataframe
 df['Scores'] = scores
