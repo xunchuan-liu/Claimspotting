@@ -95,11 +95,23 @@ def main(day=date.today().strftime("%Y-%m-%d")):
 
 
 		if (granuleClass) == "HOUSE":
-			sentences = sent_tokenize(text) #split into sentences	
+			sentences = sent_tokenize(text) #split into sentences
+
+			for s in sentences: #length filter to remove all sentences 5 words or less
+				res = len(re.findall(r'\w+', s))
+				if res <= 5:
+					sentences.remove(s)
+
 			house.extend(sentences)			
 			continue
 		if (granuleClass) == "SENATE":	
-			sentences = sent_tokenize(text) #split into sentences	
+			sentences = sent_tokenize(text) #split into sentences
+			
+			for s in sentences: #length filter to remove all sentences 5 words or less
+				res = len(re.findall(r'\w+', s))
+				if res <= 5:
+					sentences.remove(s)
+	
 			senate.extend(sentences)
 			continue
 
