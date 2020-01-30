@@ -4,10 +4,10 @@ import requests
 from datetime import date, timedelta
 
 df = pd.DataFrame()
-d = date.today().strftime("%B %d, %Y") #Example: January 20, 2020
+yesterday = (date.today() - timedelta(days=1)).strftime("%B %d, %Y") #Example: January 20, 2020
 link = "https://idir.uta.edu/factchecker/score_text/{" #Starting point of the request API link
 
-title = d + "-SENATE" + ".txt" #Name of the file will be in the format January XX, 2020.txt
+title = yesterday + "-SENATE" + ".txt" #Name of the file will be in the format January XX, 2020.txt
 claims = [] #Creating arrays to be used later
 scores = []
 
@@ -34,9 +34,6 @@ gc = pygsheets.authorize(service_file='/Users/andre/PycharmProjects/SpacyTest/Cl
 api_key='AIzaSyDFYwDLiwJklXOf-w2hTLtNFwZufKWCrhk'
 
 headers = {'Authorization': 'Bearer %s' % api_key}
-
-yesterday = date.today() - timedelta(days=1)
-yesterday = yesterday.strftime("%B %d, %Y")
 
 sh = gc.open('Claim') #Opens the sheet we are using, called 'Claim'
 current = sh.add_worksheet(title=yesterday) #Adds a new worksheet for that day
