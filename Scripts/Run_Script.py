@@ -25,15 +25,23 @@ def main(day=date.today().strftime("%Y-%m-%d"), createNew=None):
 			pickle.dump(scraper, pickle_out)
 			pickle_out.close()
 		except:
+<<<<<<< HEAD
 			print("Error creating scraper")		
+=======
+			print("Error creating scraper")
+>>>>>>> bc006d45812ccdb0dbbae982513607c67ab6be37
 			scraper = previous_scraper
 	else:
 		print("Today's scraper already exists")
 		scraper = previous_scraper
 
 
+<<<<<<< HEAD
 	samples = Scraper.sample(25, scraper.senateAll, "senate", True)
 	#samples = Scraper.sample(25, scraper.houseAll, "house", True)
+=======
+	samples = Scraper.sample(5, scraper.senateAll, True)
+>>>>>>> bc006d45812ccdb0dbbae982513607c67ab6be37
 
 
 main()
