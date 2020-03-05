@@ -1,0 +1,176 @@
+<mjml>
+  <mj-body background-color="#FFFFFF">
+    <mj-section   background-color = #000000 padding-bottom="0px">
+      </mj-column>
+      <mj-column>
+        <mj-text  font-size="35px" font-family="Lucinda Bright, serif" line-height="100%" align="left" color=#FFFFFF><strong>Claim Spotting</strong>
+        </mj-text></mj-column>
+      <mj-column>
+        <mj-text font-family="serif" line-height="120%" text-decoration="underline" align="right" color = #FFFFFF><strong>NEWS<br/>{date}</strong></mj-text>
+      </mj-column>
+</mj-section>
+
+<mj-hero><mj-spacer></mj-spacer></mj-hero>
+
+// introduction of email
+    <mj-section background-color="#E2E2E2" >
+      <mj-column>
+        <mj-text color = #000000 padding-top="0px" padding-bottom="0px" font-family="serif, Times New Roman"  font-size="17px" line-height="120%" align="left">Below are claims from yesterday’s Congressional Record that may be important to fact check. We used both <a href = "https://idir.uta.edu/claimbuster/" style="color:blue"> ClaimBuster’s Check-worthy score</a> as well as crowdsourcing through Amazon MTurk to compile this list.
+</mj-text>
+      </mj-column>
+    </mj-section>
+
+// claim one
+ <mj-section padding-bottom = 0px>
+ <mj-column>
+   
+//claim
+   <mj-text font-family = "serif, Times New Roman" font-size = "17px" padding-bottom=0px> 
+<strong>{ClaimOne}</strong> </mj-text>
+     
+// claim with one sentence before and after
+  <mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px"><i>{ContextOne}</i>
+</mj-text>
+<mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px" padding-top=0px><i>See full context in {GranuleOne} </mj-text>
+<mj-divider  border-color=#5F5F5F border-width= 0.2px width=60%></mj-divider>
+ </mj-column>
+  </mj-section>
+   
+//claim two  
+<mj-section padding-top = 0px padding-bottom=0px>
+ <mj-column>
+   
+//claim
+   <mj-text font-family = "serif" font-size = "17px"> <strong>{ClaimTwo}</strong></mj-text>
+     
+//claim with one sentence before and after
+  <mj-text font-family="serif" color= #000000 font-size="14px"><i>{ContextTwo}</i>
+</mj-text>
+<mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px" padding-top=0px><i>See full context in {GranuleTwo} </mj-text>
+<mj-divider border-color=#5F5F5F border-width= 0.2px width=60%>
+ </mj-column>
+  </mj-section>
+  
+// claim three
+<mj-section padding-top = 0px padding-bottom=0px>
+ <mj-column>
+   
+//claim   
+    <mj-text font-family = "serif" font-size = "17px"> <strong>{ClaimThree}</strong></mj-text>
+     
+//claim with one sentence before and after
+  <mj-text font-family="serif" color= #000000 font-size="14px"><i>{ContextThree}</i>
+</mj-text>
+<mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px" padding-top=0px><i>See full context in {GranuleThree} </mj-text>
+<mj-divider border-color=#5F5F5F border-width= 0.2px width=60%>
+ </mj-column>
+  </mj-section>
+
+//claim four
+<mj-section padding-top = 0px padding-bottom=0px>
+ <mj-column>
+   
+//claim
+   <mj-text font-family = "serif" font-size = "17px"> <strong>{ClaimFour}</strong></mj-text>
+     
+//claim with one sentence before and after
+  <mj-text font-family="serif" color= #000000 font-size="14px"><i>{ContextFour}</i>
+</mj-text>
+<mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px" padding-top=0px><i>See full context in {GranuleFour} </mj-text>
+<mj-divider border-color=#5F5F5F border-width= 0.2px width=60%>
+ </mj-column>
+  </mj-section>
+
+//claim five     
+<mj-section padding-top = 0px padding-bottom=0px>
+ <mj-column>
+   
+//claim
+   <mj-text font-family = "serif" font-size = "17px"> <strong>{ClaimFive}</strong></mj-text>
+     
+//claim with one sentence before and after
+  <mj-text font-family="serif" color= #000000 font-size="14px"><i>{ContextFive}</i>
+</mj-text>
+<mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px" padding-top=0px><i>See full context in {GranuleFive} </mj-text>
+<mj-divider border-color=#5F5F5F border-width= 0.2px width=60%>
+ </mj-column>
+  </mj-section>
+
+//claim six     
+<mj-section padding-top = 0px padding-bottom=0px>
+ <mj-column>
+   
+//claim
+   <mj-text font-family = "serif" font-size = "17px"> <strong>{ClaimSix}</strong></mj-text>
+     
+//claim with one sentence before and after
+  <mj-text font-family="serif" color= #000000 font-size="14px"><i>{ContextSix}</i>
+</mj-text>
+<mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px" padding-top=0px><i>See full context in {GranuleSix} </mj-text>
+<mj-divider border-color=#5F5F5F border-width= 0.2px width=60%>
+ </mj-column>
+  </mj-section>
+
+//claim seven
+<mj-section padding-top = 0px padding-bottom=0px>
+ <mj-column>
+   
+//claim
+  <mj-text font-family = "serif" font-size = "17px"> <strong>{ClaimSeven}</strong></mj-text>
+     
+//claim with one sentence before and after
+  <mj-text font-family="serif" color= #000000 font-size="14px"><i>{ContextSeven}</i>
+</mj-text>
+<mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px" padding-top=0px><i>See full context in {GranuleSeven} </mj-text>
+<mj-divider border-color=#5F5F5F border-width= 0.2px width=60%>
+ </mj-column>
+  </mj-section>
+
+//claim eight    
+<mj-section padding-top = 0px padding-bottom=0px>
+ <mj-column>
+   
+//claim
+   <mj-text font-family = "serif" font-size = "17px"> <strong>{ClaimEight}</strong></mj-text>
+     
+//claim with one sentence before and after
+  <mj-text font-family="serif" color= #000000 font-size="14px"><i>{ContextEight}</i>
+</mj-text>
+<mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px" padding-top=0px><i>See full context in {GranuleEight} </mj-text>
+<mj-divider border-color=#5F5F5F border-width= 0.2px width=60%>
+ </mj-column>
+  </mj-section>
+
+//claim nine
+<mj-section padding-top = 0px padding-bottom=0px>
+ <mj-column>
+   
+//claim
+  <mj-text font-family = "serif" font-size = "17px"> <strong>{ClaimNine}</strong></mj-text>
+     
+//claim with one sentence before and after
+  <mj-text font-family="serif" color= #000000 font-size="14px"><i>{ContextNine}</i>
+</mj-text>
+<mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px" padding-top=0px><i>See full context in {GranuleNine} </mj-text>
+<mj-divider border-color=#5F5F5F border-width= 0.2px width=60%>
+ </mj-column>
+  </mj-section>
+
+//claim ten
+<mj-section padding-top = 0px padding-bottom=0px>
+ <mj-column>
+   
+//claim
+ <mj-text font-family = "serif" font-size = "17px"> <strong>{ClaimTen}</strong></mj-text>
+     
+//claim with one sentence before and after
+  <mj-text font-family="serif" color= #000000 font-size="14px"><i>{ContextTen}</i>
+</mj-text>
+<mj-text font-family="serif, Times New Roman" color= "#000000" font-size="14px" padding-top=0px><i>See full context in {GranuleTen} </mj-text>
+<mj-divider border-color=#5F5F5F border-width= 0.2px width=60%>
+ </mj-column>
+  </mj-section>
+
+  
+  </mj-body>
+</mjml>
