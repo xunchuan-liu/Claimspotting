@@ -41,9 +41,7 @@ class Scraper:
 			print("Scraping...")			
 			
 			### Create table for the day
-			self.db.createTable(self.yesterday)
-
-			self.db.deleteAll(self.yesterday)
+			self.db.createTable(self.yesterday)			
 
 			### Set parameters to use api URL	
 			date, packageParameters, granuleParameters = self.setParameters(self.date)	
@@ -297,7 +295,9 @@ class Scraper:
 
 	## Gets score for the given sentence
 	@staticmethod
-	def score(sentence):	
+	def score(sentence):
+		if "%" in sentence:
+			sentence = re.sub("%", "%25", sentence) #If the sentence has a percentage sign, encoding it properly for the URL	
 		link = "https://idir.uta.edu/claimbuster/API/score/text/"+sentence
 		response = requests.get(link)
 
@@ -314,19 +314,19 @@ class Scraper:
 	def select(self, body, size, table, fileName=None, createFile=False):
 		self.db = DBConnector("./Database/CR.db")
 
-		sql = "SELECT * FROM "+table+""" WHERE body=SENATE AND score<0.25
+		sql = "SELECT * FROM "+table+""" WHERE body=\""""+body+"""\" AND score<0.25
 				ORDER BY RANDOM() LIMIT """+str(size)+" ;"				
 		first = np.array(self.db.selectByCondition(sql))
 
-		sql = "SELECT * FROM "+table+""" WHERE body=SENATE AND score>0.25 AND score<0.5
+		sql = "SELECT * FROM "+table+""" WHERE body=\""""+body+"""\" AND score>0.25 AND score<0.5
 				ORDER BY RANDOM() LIMIT """+str(size)+" ;"				
 		second = np.array(self.db.selectByCondition(sql))
 
-		sql = "SELECT * FROM "+table+""" WHERE body=SENATE AND score>0.5 AND score<0.75
+		sql = "SELECT * FROM "+table+""" WHERE body=\""""+body+"""\" AND score>0.5 AND score<0.75
 				ORDER BY RANDOM() LIMIT """+str(size)+" ;"				
 		third = np.array(self.db.selectByCondition(sql))
 
-		sql = "SELECT * FROM "+table+""" WHERE body=SENATE AND score>0.75
+		sql = "SELECT * FROM "+table+""" WHERE body=\""""+body+"""\" AND score>0.75
 				ORDER BY RANDOM() LIMIT """+str(size)+" ;"				
 		fourth = np.array(self.db.selectByCondition(sql))
 
@@ -362,6 +362,13 @@ class Scraper:
 		formatted = np.asarray(formatted)
 
 		return formatted
+
+
+
+	'''
+	The remaining functions were formerly used when everything is still stored in the memory. No longer needed after using database to store data.
+	'''
+
 
 
 	## NO LONGER USED AFTER MAKING DB CONNECTION - LOOK AT SCRAPER.SELECT FOR NEW SAMPLING METHOD
