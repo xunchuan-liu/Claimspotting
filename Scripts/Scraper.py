@@ -257,6 +257,7 @@ class Scraper:
 							"Under clause",
 							"The SPEAKER",
 							"Section \d",
+							"Recommendation \d",
 							"An act to ",							
 							"[^a-zA-Z]")	
 
@@ -270,6 +271,12 @@ class Scraper:
 							 "H. Res.",
 							 "thank my collegeagues",
 							 "[Pp]ursuant",
+							 "I am grateful",
+							 "submitted an amendment",
+							 "YEAS",
+							 "NAYS",
+							 "NOT VOTING",
+							 "-- \([a-zA-Z\d]\)",
 							 "result of the vote")
 
 		for e in searchExpressions:
