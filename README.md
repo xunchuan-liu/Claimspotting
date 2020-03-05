@@ -1,5 +1,6 @@
 # Claimspotting
-W '20 Studio Class: Claim Spotting
+Knight Lab Studio Class Project Winter 2020: Claimspotting
+Medill School of Journalism, Northwestern University 
 
 ## Built With
 * [Claimbuster](https://idir.uta.edu/claimbuster/) - The automated claim scoring platform used
@@ -7,7 +8,7 @@ W '20 Studio Class: Claim Spotting
 * [Amazon Mechanical Turk](https://www.mturk.com/) - The crowdsourcing tool used
 
 ## MTurk Test
-This contains our HTML file to upload to Amazon Mechanical Turk (MTurk) for crowdsourcing purposes. 
+This contains our HTML file that was uploaded to Amazon Mechanical Turk (MTurk) for crowdsourcing purposes. 
 
 ## QuickScripts
 This folder contains quick scripts that we used for testing various components of the project along the way such as Spacy and Claimbuster. 
