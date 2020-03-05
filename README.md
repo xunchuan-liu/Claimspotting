@@ -17,15 +17,16 @@ This folder contains quick scripts that we used for testing various components o
 These folders contain CSV files associated with our first and second uses of Amazon MTurk. They include the samples that we inputted (Samples.csv), results (Results.csv), analysis (Statistics.csv), and visualizations (Score vs Rating.png) 
 
 ### Database.py
+This script uses the sqlite package to perform basic database functions on the data gained from Scraper.py. 
 
 ### Results.py
-
-### Run_Script.py
+This script performs data analysis using the Pearson Coefficient and p-value provided by the results gained from Amazon MTurk and exports the results to a csv file. 
 
 ### Scraper.py
+This script scrapes the Congressional Record for claims that will later be scored by Claimbuster and Amazon MTurk. Performs filtering on irrelevant statements, reading of bills, etc. Also gains the context around a sentence and scores the sentence using Claimbuster. Uploads the final results to a csv file.
 
 ### WriteHouse.py, WriteSenate.py
-These are scripts that use the Claimbuster API to score claims scraped from the Congressional Record for the House of Representatives and the Senate, respectively. These claims are then sent to a Google Sheets database for storage. 
+These are scripts that use the Claimbuster API to score claims scraped from the Congressional Record for the House of Representatives and the Senate, respectively. These claims are then sent to a Google Sheets database for storage. Modified version included in Scraper.py. 
 
 ### create_tasks.py 
 This is a script that creates HITs on Amazon MTurk for crowdsourcing purposes. 
