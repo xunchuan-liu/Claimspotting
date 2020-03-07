@@ -19,6 +19,7 @@ from Database import DBConnector
 class Scraper:
 
 	api_key = "lZhfHdqsylDdCK7Rkb8v7BArGTrOcpUQCZ8ZQGU7"
+	Database_file = "./Database/CR.db"
 	dataExists = None
 
 	## Everything is done on initialization
@@ -26,13 +27,14 @@ class Scraper:
 		self.date=str(date) #This is today's date but we always pull yesterday's record
 		self.yesterday = "`"+(date - timedelta(days=1)).strftime("%Y_%m_%d")+"`" #Name of our database table using yesterday's date
 
-		self.db = DBConnector("./Database/CR.db") #Create connection to database		
+		self.db = DBConnector(Scraper.Database_file) #Create connection to database		
 
 		if exists is None:
 			yesterday = (date - timedelta(days=1)).strftime("%Y_%m_%d")	
 			Scraper.dataExists = self.db.tableExists(yesterday) #Check if we've already added the day's data to table
 		else:
-			Scraper.dataExists = exists		
+			Scraper.dataExists = exists
+
 
 		if Scraper.dataExists:
 			print("Today's data already exists")
@@ -146,7 +148,7 @@ class Scraper:
 		return granules
 
 
-	## Iterate through the granule list and add sentences, context, inserts, and links to house and senate
+	## Iterate through the granule list and add sentences, scores, context, inserts, and links to house and senate
 	def addSentences(self, granules):	
 		houseExists = False # Checking if house met that day
 		senateExists = False # Checking if senate met that day	
@@ -234,7 +236,7 @@ class Scraper:
 		if sentence[-1] == "?":
 			return sentence
 
-
+		# Filters out sentences that start with these sentences
 		matchExpressions = ("Congressional Record, Volume ",
 							"Congress has the power to enact",
 							"A bill to",
@@ -266,6 +268,8 @@ class Scraper:
 			if match is not None:
 				return match
 
+
+		#Filters out sentences that contain these expressions
 		searchExpressions = ("The Following Name Officer",
 							 "THE FOLLOWING NAMED OFFICER",
 							 "H. Res.",
@@ -287,7 +291,7 @@ class Scraper:
 		return None
 
 
-	## If possible keep the context to 4 sentences before and after the given sentence
+	## Cut the context to 4 sentences before and after the given sentence unless it's already shorter than that
 	## Adds an excerpt to be used for newletter that's 1 sentence before and 1 sentence after
 	@staticmethod
 	def cutContext(sentence, text):
@@ -304,7 +308,8 @@ class Scraper:
 	@staticmethod
 	def score(sentence):
 		if "%" in sentence:
-			sentence = re.sub("%", "%25", sentence) #If the sentence has a percentage sign, encoding it properly for the URL	
+			sentence = re.sub("%", "%25", sentence) #If the sentence has a percentage sign, encode it as %25 in the API URL request	
+
 		link = "https://idir.uta.edu/claimbuster/API/score/text/"+sentence
 		response = requests.get(link)
 
@@ -312,14 +317,14 @@ class Scraper:
 			object = response.json()
 			score = object["results"][0].get("score")		
 			return score
-		else:
+		else: #If failed to return a score, print sentence so we can investigate - will return a score of 0
 			print(response.status_code)
 			print(sentence)
 			return 0
 
-	
+	## Selects a set of random data to sample from the given congressional body of given size and creates csv files if indicated	
 	def select(self, body, size, table, fileName=None, createFile=False):
-		self.db = DBConnector("./Database/CR.db")
+		self.db.createConnection(Scraper.Database_file)
 
 		sql = "SELECT * FROM "+table+""" WHERE body=\""""+body+"""\" AND score<0.25
 				ORDER BY RANDOM() LIMIT """+str(size)+" ;"				
@@ -340,7 +345,7 @@ class Scraper:
 		self.db.closeConnection()
 
 		samples = np.vstack((first, second, third, fourth))
-		formatted_context = Scraper.format(samples)		
+		formatted_context = Scraper.format(samples) #Adds bold tag to the context for HTML display
 		samples[:, 4] = formatted_context
 
 		if createFile and fileName is not None:		
@@ -373,14 +378,14 @@ class Scraper:
 
 
 	'''
-	The remaining functions were formerly used when everything is still stored in the memory. No longer needed after using database to store data.
+	The remaining functions were formerly used when everything is still stored in memory. No longer needed after using database to store data.
 	'''
 
 
 
 	## NO LONGER USED AFTER MAKING DB CONNECTION - LOOK AT SCRAPER.SELECT FOR NEW SAMPLING METHOD
 	## USE ONLY IF DATA WAS STORED IN OBJECT VARIABLES
-	## Sample a batch of sentencees for crowdsourcing
+	## Sample a batch of sentences for crowdsourcing
 	@staticmethod 
 	def sample(size, a, fileName, createFile=False):
 		scores = a[:, 1].astype("float")		
@@ -460,7 +465,7 @@ class Scraper:
 		else:
 			print("No Senate today")
 
-
+	## CURRENTLY UNUSED
 	## Method to create files with data from database if need be
 	@staticmethod
 	def writeFiles():
