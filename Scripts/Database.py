@@ -8,6 +8,7 @@ class DBConnector:
 		self.connection = self.createConnection(db_file)
 		self.cursor = self.connection.cursor()		
 
+	## Creates a database connection
 	@staticmethod
 	def createConnection(db_file):
 		conn = None
@@ -19,10 +20,14 @@ class DBConnector:
 					
 		return conn
 
+
+	## Closes the current database connection
 	def closeConnection(self):
 		self.connection.close()
 		print("Database Closed")
 
+
+	## Creates a new table in the database if it doesn't exist already
 	def createTable(self, table):
 		create_main_table = "CREATE TABLE IF NOT EXISTS "+table+""" 		         			
 							(
@@ -38,6 +43,8 @@ class DBConnector:
 
 		self.cursor.execute(create_main_table)
 
+
+	## Checks if the table exists
 	def tableExists(self, table):
 		sql = "SELECT count(name) FROM sqlite_master WHERE type=\"table\" AND name=\""+table+"\" ;"
 
@@ -48,6 +55,8 @@ class DBConnector:
 		else:
 			return False
 
+
+	## Inserts the data into the given table
 	def insertData(self, table, data):
 		sql = "INSERT INTO "+table+""" (body, claim, score, context, newsInsert, pdfLink)
 					VALUES(?,?,?,?,?,?);"""
@@ -55,18 +64,19 @@ class DBConnector:
 		self.cursor.execute(sql, data)
 		self.connection.commit()
 
+	## Selects all data from the table
 	def selectAll(self, table):
 		sql = "SELECT * FROM "+table+" ;"
 
 		self.cursor.execute(sql)
 		return self.cursor.fetchall()
 
+	## Selects with given conditions - the SQL will need to be supplied for this function
 	def selectByCondition(self, sql):
 		self.cursor.execute(sql)
 		return self.cursor.fetchall()
 
-
-
+	## Updates the data for the table
 	def updateData(self, table, data):
 		sql = "UPDATE "+table+"""
 				SET claim = ?,
@@ -81,19 +91,21 @@ class DBConnector:
 		self.cursor.execute(sql, data)
 		self.connection.commit()
 
-
+	## Deletes the selected data from the table
 	def deleteData(self, table, id):
 		sql = "DELETE FROM "+table+" WHERE id = ?;"
 
 		self.cursor.execute(sql, data)
 		self.connection.commit()
 
+	## Deletes all data from the table
 	def deleteAll(self, table):
 		sql = "DELETE FROM "+table+" ;"
 
 		self.cursor.execute(sql)
 		self.connection.commit()
 
+	## Deletes the table from the database
 	def deleteTable(self, table):
 		sql = "DROP TABLE "+table+" ;"
 		
