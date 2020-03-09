@@ -19,15 +19,19 @@ from Database import DBConnector
 class Scraper:
 
 	api_key = "lZhfHdqsylDdCK7Rkb8v7BArGTrOcpUQCZ8ZQGU7"
-	Database_file = "./Database/CR.db"
+	database_file = "./Database/CR.db"
 	dataExists = None
+	selectionCriteria = None
 
 	## Everything is done on initialization
-	def __init__(self, date, exists=None):		
+	def __init__(self, date, exists=None):
+		self.dailyClaims = None #Contains 10 best claims we will use for the daily newsletter 
+
 		self.date=str(date) #This is today's date but we always pull yesterday's record
 		self.yesterday = "`"+(date - timedelta(days=1)).strftime("%Y_%m_%d")+"`" #Name of our database table using yesterday's date
 
-		self.db = DBConnector(Scraper.Database_file) #Create connection to database		
+		self.db = DBConnector(Scraper.database_file) #Create connection to database
+		self.db.createConnection()	
 
 		if exists is None:
 			yesterday = (date - timedelta(days=1)).strftime("%Y_%m_%d")	
@@ -279,6 +283,7 @@ class Scraper:
 							 "submitted an amendment",
 							 "YEAS",
 							 "NAYS",
+							 "``"
 							 "NOT VOTING",
 							 "-- \([a-zA-Z\d]\)",
 							 "result of the vote")
@@ -323,8 +328,8 @@ class Scraper:
 			return 0
 
 	## Selects a set of random data to sample from the given congressional body of given size and creates csv files if indicated	
-	def select(self, body, size, table, fileName=None, createFile=False):
-		self.db.createConnection(Scraper.Database_file)
+	def sample(self, body, size, table, fileName=None, createFile=False):
+		self.db.createConnection(Scraper.database_file)
 
 		sql = "SELECT * FROM "+table+""" WHERE body=\""""+body+"""\" AND score<0.25
 				ORDER BY RANDOM() LIMIT """+str(size)+" ;"				
@@ -375,6 +380,23 @@ class Scraper:
 
 		return formatted
 
+	## Selects top 10 claims to be used for daily newsletter with the criteria
+	def selectBest(self):
+		self.db.createConnection()
+		self.dailyClaims = self.db.selectDaily(self.yesterday)
+		self.db.closeConnection()
+
+	## Writes the daily claims, contexts, and links to a json object
+	def writeJSON(self):		
+		return json.dumps(self.dailyClaims)		
+
+
+	## CURRENTLY UNUSED
+	## Method to create files with data from database
+	@staticmethod
+	def writeFiles():
+		pass
+
 
 
 	'''
@@ -387,7 +409,7 @@ class Scraper:
 	## USE ONLY IF DATA WAS STORED IN OBJECT VARIABLES
 	## Sample a batch of sentences for crowdsourcing
 	@staticmethod 
-	def sample(size, a, fileName, createFile=False):
+	def oldSample(size, a, fileName, createFile=False):
 		scores = a[:, 1].astype("float")		
 
 		first = a[scores < 0.25]		
@@ -465,11 +487,7 @@ class Scraper:
 		else:
 			print("No Senate today")
 
-	## CURRENTLY UNUSED
-	## Method to create files with data from database if need be
-	@staticmethod
-	def writeFiles():
-		pass
+	
 
 
 	
