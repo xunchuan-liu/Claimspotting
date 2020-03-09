@@ -5,20 +5,21 @@ from datetime import date, timedelta
 class DBConnector:
 
 	def __init__(self, db_file):
-		self.connection = self.createConnection(db_file)
-		self.cursor = self.connection.cursor()		
+		self.db_file = db_file
+		self.connection = None
+		self.cursor = None		
 
-	## Creates a database connection
-	@staticmethod
-	def createConnection(db_file):
+	## Creates a database connection	
+	def createConnection(self):
 		conn = None
 		try:
-			conn = sqlite3.connect(db_file)			
+			conn = sqlite3.connect(self.db_file)			
 			print("Database Connected")
 		except Error as e:
 			print(e)		
 					
-		return conn
+		self.connection = conn
+		self.cursor = self.connection.cursor()
 
 
 	## Closes the current database connection
@@ -73,6 +74,16 @@ class DBConnector:
 
 	## Selects with given conditions - the SQL will need to be supplied for this function
 	def selectByCondition(self, sql):
+		self.cursor.execute(sql)
+		return self.cursor.fetchall()
+
+	## Select daily claims to be put in the newsletter
+	def selectDaily(self, table):
+		sql = "SELECT id, body, claim, score, context, newsInsert, pdfLink FROM "+table+""" 
+				ORDER BY score DESC
+				LIMIT 10;
+				"""
+
 		self.cursor.execute(sql)
 		return self.cursor.fetchall()
 
