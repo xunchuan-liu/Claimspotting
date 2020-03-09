@@ -1,12 +1,17 @@
 from Scraper import Scraper
 from Results import Results
-from datetime import date, timedelta	
+import requests
+from datetime import date, datetime, timedelta	
 
 ## Runs the scraping for the day
 def Scraping(day=date.today(), exists=None):
-	scraper = Scraper(day, exists)	
+	scraper = Scraper(day, exists)
+	scraper.selectBest()
+	json = scraper.writeJSON()
 
-	samples = scraper.select("SENATE", 25, scraper.yesterday, "senate_3.csv", True)
+	return json	
+
+	#samples = scraper.sample("SENATE", 25, scraper.yesterday, "senate_3.csv", True)
 
 ## Runs the data analysis for the day
 def Analyze(fileName, createFiles=False):
